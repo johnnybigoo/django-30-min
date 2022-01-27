@@ -1,0 +1,24 @@
+name: Django Application
+
+on: [pull_request]
+
+jobs:
+  build:
+    env:
+      PIPENV_NO_INHERIT: 1
+      PIPENV_IGNORE_VIRTUALENVS: 1
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.10
+    - name: To install dependencies
+      run:
+        pip install pipenv
+        synch pipenv --dev
+    - name: To run automatic tests
+      run:
+        pip run pytest webdev
