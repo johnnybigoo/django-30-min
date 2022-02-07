@@ -27,14 +27,32 @@
                     <h2 class="mt-5">Pending Tasks</h2>
 
                     {% for task in pending_tasks %}
-                        <form>
+                        <form action="{% url 'tasks:detail' task_id=task.id %}" method="post">
+                            {% csrf_token %}
                             <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <input type="checkbox" aria-label="Chackbox to task">
-                                    </div>
+                                <input type="text" class="form-control" placeholder="Describe your task" required="required"
+                                       aria-label="Describe your task" name="name" value="{{ task.name }}">
+                                <input type="hidden" value="checked" name="done">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-success">Mask as done</button>
                                 </div>
-                                <input type="text" class="form-control" aria-label="Text input to task" value="{{task.name}}">
+                            </div>
+                        </form>
+                    {% endfor %}
+
+                    <h2 class="mt-5">Tasks Finished</h2>
+
+                    {% for task in tasks_done %}
+                        <form action="{% url 'tasks:detail' task_id=task.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Describe your task" required="required"
+                                       aria-label="Describe your task" name="name" value="{{ task.name }}">
+
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-warning">Mask as pendent</button>
+                                </div>
                             </div>
                         </form>
                     {% endfor %}
